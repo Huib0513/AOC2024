@@ -27,6 +27,7 @@ def solve1():
             if not ((0 < abs(d) <=3) and ((d*dir) == d)):
                 valid = False
                 break
+        print(i, valid)
         if (valid == True): count += 1
     result = count
 
