@@ -4,47 +4,36 @@ import datetime
 
 # Test input
 input = [
-"3   4",
-"4   3",
-"2   5",
-"1   3",
-"3   9",
-"3   3"
+"7 6 4 2 1",
+"1 2 7 8 9",
+"9 7 6 2 1",
+"1 3 2 4 5",
+"8 6 4 4 1",
+"1 3 6 7 9"
 ]
 
 # input complete lines
 input = open('input_'+os.path.basename(__file__).split(".")[0]+'.txt').read().splitlines()
 
 def solve1():
-    left = []
-    right = []
-    for row in input:
-        l,r = row.split('   ')
-        left.append(int(l))
-        right.append(int(r))
-    left.sort()
-    right.sort()
+    count = 0
+    for r in input:
+        valid = True
+        rs = [int(l) for l in r.split(' ')]
+        dir = 1 if ((rs[1] - rs[0]) > 0) else -1
+        for i in range(len(rs)-1):
+            d = rs[i+1] - rs[i]
 
-    sum = 0
-    for row in range(len(left)):
-        sum += abs(left[row] - right[row])
-    result = sum
+            if not ((0 < abs(d) <=3) and ((d*dir) == d)):
+                valid = False
+                break
+        if (valid == True): count += 1
+    result = count
 
     print("Deel 1: " + str(result))
 
 def solve2():
-    left = defaultdict(int)
-    right = defaultdict(int)
-
-    for row in input:
-        l,r = row.split('   ')
-        left[l] += 1
-        right[r] += 1
-    
-    diff = 0
-    for l in left.keys():
-        diff += int(l) * left[l] * right[l]
-    result = diff
+    result = 'No'
     print("Deel 2: " + str(result))
 
 start = datetime.datetime.now()
