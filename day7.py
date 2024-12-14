@@ -16,15 +16,31 @@ input = ["190: 10 19",
 # input complete lines
 #input = open('input_'+os.path.basename(__file__).split(".")[0]+'.txt').read().splitlines()
 
+def get_values(startval: list, parts: list):
+    possiblevalues = []
+    for s in startval:
+        possiblevalues.append(s * parts[0])
+        possiblevalues.append(s + parts[0])
+    if len(parts) > 1:
+        possiblevalues += (get_values(possiblevalues, parts[1:]))
+    return possiblevalues
 
 def solve1():
-    print("Deel 1: No")
+    result = 0
+    for line in input:
+        target = int(line.split(': ')[0])
+        values = get_values([int(line.split(': ')[1].split(' ')[0])], [int(x) for x in line.split(': ')[1].split(' ')[1:]])
+        if (target in values):
+            print('Match! ' + str(target) + ' is in ', end='')
+            print(values)
+            result += int(line.split(': ')[0])
+        else:
+            print('No match :( ' + str(target) + ' is NOT in ', end='')
+            print(values)
+    print("Deel 1: " + str(result))
 
 def solve2():
     print("Deel 2: No")
-
-data = {y:[a for a in l.split(': ')[1]] for y in l.split(': ')[0] for l in input}
-print(data)
 
 start = datetime.datetime.now()
 solve1()
